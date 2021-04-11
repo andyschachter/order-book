@@ -5,6 +5,10 @@ const reconcileOrder = (existingBook, incomingOrder) => {
   if (existingBook.length === 0) {
     updatedBook.push(incomingOrder)
   }
+  
+  if (existingBook.length > 0 && existingBook[0].type === incomingOrder.type) {
+    updatedBook.push(existingBook[0], incomingOrder)
+  }
 
   return updatedBook
 }
