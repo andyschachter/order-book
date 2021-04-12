@@ -7,15 +7,17 @@ const reconcileOrder = (existingBook, incomingOrder) => {
   }
 
   if (existingBook.length > 0) {
+    updatedBook.push(incomingOrder)
+
     for (let i=0; i < existingBook.length; i++) {
       if (existingBook[i].type === incomingOrder.type) {
-        updatedBook.push(existingBook[i], incomingOrder)        
+        updatedBook.unshift(existingBook[i])        
       }
       if (existingBook[i].type !== incomingOrder.type && existingBook[i].quantity === incomingOrder.quantity && existingBook[i].price === incomingOrder.price) {
-        i++
+        updatedBook.splice(0,1)
       }      
       if (existingBook[i].type !== incomingOrder.type && existingBook[i].quantity !== incomingOrder.quantity && existingBook[i].price !== incomingOrder.price) {
-        updatedBook.push(existingBook[i], incomingOrder)  
+        updatedBook.unshift(existingBook[i])  
       }
 
 
@@ -26,7 +28,5 @@ const reconcileOrder = (existingBook, incomingOrder) => {
 }
 
 console.log(reconcileOrder([{ type: 'sell', quantity: 10, price: 6150 }], { type: 'sell', quantity: 12, price: 6000 }))
-let object = { type: 'sell', quantity: 12, price: 6000 }
-console.log(object)
 
 module.exports = reconcileOrder
