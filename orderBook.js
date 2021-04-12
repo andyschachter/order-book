@@ -19,6 +19,11 @@ const reconcileOrder = (existingBook, incomingOrder) => {
       if (existingBook[i].type !== incomingOrder.type && existingBook[i].quantity !== incomingOrder.quantity && existingBook[i].price !== incomingOrder.price) {
         updatedBook.unshift(existingBook[i])  
       }
+      if (existingBook[i].type !== incomingOrder.type && existingBook[i].quantity > incomingOrder.quantity && existingBook[i].price === incomingOrder.price) {
+        updatedBook.splice(0,1)
+        updatedBook.unshift({type: existingBook[i].type, quantity: (existingBook[i].quantity - incomingOrder.quantity), price: incomingOrder.price})
+      }
+      
 
 
     }
