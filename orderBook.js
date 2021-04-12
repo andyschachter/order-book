@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 const reconcileOrder = (existingBook, incomingOrder) => {
   let updatedBook = []
-  let incomingArr = [incomingOrder]
 
   if (existingBook.length === 0) {
     updatedBook.push(incomingOrder)
@@ -32,11 +31,16 @@ const reconcileOrder = (existingBook, incomingOrder) => {
       }
       if (existingBook[i].type !== incomingOrder.type && existingBook[i].quantity === incomingOrder.quantity && existingBook[i].price > incomingOrder.price) {
         updatedBook.splice(0,1)  
-      }    
-
-
+      }
+      if (existingBook[i].type !== incomingOrder.type && existingBook[i].quantity === incomingOrder.quantity && existingBook[i].price < incomingOrder.price) {
+        updatedBook.unshift(existingBook[i])
+      }      
     }
   }
+
+  updatedBook.sort((a,b) => {
+    return a.type - b.type
+  })
 
   return updatedBook
 }
