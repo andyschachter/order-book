@@ -34,17 +34,13 @@ const reconcileOrder = (existingBook, incomingOrder) => {
       }
       if (existingBook[i].type !== incomingOrder.type && existingBook[i].quantity === incomingOrder.quantity && existingBook[i].price < incomingOrder.price) {
         updatedBook.unshift(existingBook[i])
+        i++
+        updatedBook.splice(1,0,existingBook[i])
       }      
     }
   }
 
-  updatedBook.sort((a,b) => {
-    return a.type - b.type
-  })
-
   return updatedBook
 }
-
-console.log(reconcileOrder([{ type: 'sell', quantity: 10, price: 6150 }], { type: 'sell', quantity: 12, price: 6000 }))
 
 module.exports = reconcileOrder
